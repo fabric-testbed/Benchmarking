@@ -65,6 +65,7 @@ keytool -keystore kafka.client.truststore.jks -alias CARoot -import -file ca-cer
 keytool -keystore kafka.server.truststore.jks -alias CARoot -import -file ca-cert
 ```
 7. Generate SSL Key and Certificate for each broker and sign it with CA
+
    7.1 Broker 1
    ```
    keytool -keystore kafka.server0.keystore.jks -alias localhost -validity 365 -genkey
@@ -145,22 +146,6 @@ ssl.truststore.password = "test1234"
 cd /opt/kafka_2.12-2.3.0
 bin/kafka-run-class.sh org.apache.kafka.tools.ProducerPerformance --print-metrics --topic fabric-cf --num-records 1000 --throughput 10000 --record-size 1000000 --producer-props bootstrap.servers=zoo1:9092 acks=-1 buffer.memory=67108864 batch.size=64000 --producer.config client-ssl.properties
 ```
-## Refrences
-https://www.confluent.io/blog/apache-kafka-security-authorization-authentication-encryption/
-https://blog.softwaremill.com/does-kafka-really-guarantee-the-order-of-messages-3ca849fd19d2
-https://docs.confluent.io/2.0.0/kafka/ssl.html
-https://docs.confluent.io/current/security/security_tutorial.html#generating-keys-certs
-https://blog.newrelic.com/engineering/new-relic-kafkapocalypse/
-https://engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines
-https://gist.github.com/jkreps/c7ddb4041ef62a900e6c
-https://gist.github.com/zodvik/b86757d45a95ed194fc9d87e507c1bcc
-https://www.confluent.io/blog/build-services-backbone-events/
-https://medium.com/@sunilvb/spring-boot-kafka-schema-registry-c6e32485a7c8
-https://docs.confluent.io/current/clients/python.html#python-client
-https://github.com/confluentinc/confluent-kafka-python
-https://www.confluent.io/blog/apache-kafka-security-authorization-authentication-encryption/
-https://blog.softwaremill.com/does-kafka-really-guarantee-the-order-of-messages-3ca849fd19d2
-
 ## TCP Tuning (Used only for Inter Site Cluster Tests)
 ```
 cat << EOF >> /etc/sysctl.conf
@@ -199,3 +184,19 @@ ip link set <IF>.<VLAN_TAG> txqueuelen 10000
 - Intra Site Cluster; same Availability Zone
 - Intra Site Cluster; different Availability Zone
 - Inter Site Cluster
+
+## Refrences
+https://www.confluent.io/blog/apache-kafka-security-authorization-authentication-encryption/
+https://blog.softwaremill.com/does-kafka-really-guarantee-the-order-of-messages-3ca849fd19d2
+https://docs.confluent.io/2.0.0/kafka/ssl.html
+https://docs.confluent.io/current/security/security_tutorial.html#generating-keys-certs
+https://blog.newrelic.com/engineering/new-relic-kafkapocalypse/
+https://engineering.linkedin.com/kafka/benchmarking-apache-kafka-2-million-writes-second-three-cheap-machines
+https://gist.github.com/jkreps/c7ddb4041ef62a900e6c
+https://gist.github.com/zodvik/b86757d45a95ed194fc9d87e507c1bcc
+https://www.confluent.io/blog/build-services-backbone-events/
+https://medium.com/@sunilvb/spring-boot-kafka-schema-registry-c6e32485a7c8
+https://docs.confluent.io/current/clients/python.html#python-client
+https://github.com/confluentinc/confluent-kafka-python
+https://www.confluent.io/blog/apache-kafka-security-authorization-authentication-encryption/
+https://blog.softwaremill.com/does-kafka-really-guarantee-the-order-of-messages-3ca849fd19d2
