@@ -45,6 +45,11 @@ pip install Kafka-python
 ```
 ./scripts/disk.sh
 ```
+Add following lines to /etc/fstab
+```
+/dev/nvme0n1 /zoo  ext4 defaults 1 2
+/dev/nvme1n1 /kafka  ext4 defaults 1 2
+```
 3. Install ZooKeeper
 ```
 ./scripts/setupZooKeeper.sh 3.4.12
