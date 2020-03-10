@@ -181,9 +181,11 @@ ip link set <IF> txqueuelen 10000
 ip link set <IF>.<VLAN_TAG> txqueuelen 10000
 ```
 ## AWS Cloud Formation
-- Intra Site Cluster; same Availability Zone
-- Intra Site Cluster; different Availability Zone
+- [Intra Site Cluster; same Availability Zone](./scripts/cloudformation/kafka-vpc.template)
+- [Intra Site Cluster; different Availability Zone](./scripts/cloudformation/kafka-vpc-multiple-az.template)
 - Inter Site Cluster
+  - [East](./scripts/cloudformation/kafka-vpc-east.template)
+  - [West](./scripts/cloudformation/kafka-vpc-west.template)
 
 ## Refrences
 https://www.confluent.io/blog/apache-kafka-security-authorization-authentication-encryption/
