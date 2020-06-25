@@ -101,7 +101,15 @@ keytool -keystore kafka.server.truststore.jks -alias CARoot -import -file ca-cer
    keytool -keystore kafka.server2.keystore.jks -alias CARoot -import -file ca-cert
    keytool -keystore kafka.server2.keystore.jks -alias localhost -import -file cert-signed
    ```
-8. Create ssl directory on each broker
+8. Generate certs for the client
+```
+keytool -keystore kafka.client.keystore.jks -alias localhost -validity 365 -genkey
+keytool -keystore kafka.client.keystore.jks -alias localhost -certreq -file cert-file
+openssl x509 -req -CA ca-cert -CAkey ca-key -in cert-file -out cert-signed -days 365 -CAcreateserial -passin pass:test1234
+keytool -keystore kafka.client.keystore.jks -alias CARoot -import -file ca-cert
+keytool -keystore kafka.client.keystore.jks -alias localhost -import -file cert-signed
+```
+9. Create ssl directory on each broker
 ```
 mkdir -p /var/private/ssl
 ```
@@ -145,6 +153,7 @@ fetch.message.max.bytes=15728640
 security.protocol = SSL
 ssl.truststore.location = "/var/private/ssl/kafka.client.truststore.jks"
 ssl.truststore.password = "test1234"
+ssl.keystore.location = "/var/private/ssl/kafka.client.keystore.jks"
 ```
 15. Trigger the traffic
 ```
